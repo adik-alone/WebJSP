@@ -1,0 +1,177 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#header {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    height: 70px;
+    text-align: center;
+    border-bottom: #3b0764 5px solid;
+    background: #7842e1;
+    color: #fff;
+    line-height: 70px;
+    float: right;
+    margin-bottom: 5px;
+}
+/*--------------------------------------------------------------------------------------------------------*/
+#main {
+    width: 97%;
+    height: 100px;
+    padding: 10px;
+    border: #8b76e5 solid 3px;
+    background: #cab6f1;
+    color: black;
+    float: left;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+.checkbox_div{
+    padding: 5px;
+    margin: 5px;
+    float: left;
+
+    /*width: 50px;*/
+
+    background: #818cf8;
+    border-radius: 5px;
+    border: solid #4338ca 2px;
+}
+
+
+
+.text{
+    padding-bottom: 5px;
+    /*margin-left: 50px;*/
+    text-align: center;
+}
+.Checkbox{
+
+    width: 200px;
+    float: left;
+
+    border-radius: 15px;
+    background: #a78bfa;
+    border: 2px solid #5b21b6;
+
+}
+#div-y{
+    /*width: 200px;*/
+    height: 50px;
+    float: left;
+    margin: 10px;
+    padding-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    border-radius: 15px;
+    background: #a78bfa;
+    border: 2px solid #5b21b6;
+
+}
+#div-r{
+    width: 150px;
+    height: 60px;
+    text-align: center;
+    float: left;
+    margin: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    border-radius: 15px;
+    background: #a78bfa;
+    border: 2px solid #5b21b6;
+}
+
+
+
+
+#button {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    background: #7c3aed;
+    color: white;
+    border-radius: 15px;
+    width: 300px;
+    height: 100px;
+    float: right;
+    cursor: pointer;
+}
+
+#button:hover{
+    box-shadow: 0 15px 65px #7842e1;
+}
+
+#error{
+    border-radius: 15px;
+    background: #fecaca;
+    border: #991b1b 2px solid;
+    margin-top: 5px;
+    margin-left: 100px;
+    width: 100px;
+    height: 90px;
+    float: left;
+    text-align: center;
+    padding-top: 8px;
+    /*margin-bottom: 10px;*/
+}
+/*-------------------------------------------------------------------------------------------------------------*/
+#image{
+    width: 25%;
+    height: 400px;
+    float: left;
+    /*border: #8b76e5 3px solid;*/
+    /*background: #cab6f1;*/
+    /*margin-left: 1px;*/
+    /*padding: 2.5px;*/
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+#MyCanvas{
+    width: 300px;
+    height: 400px;
+}
+/*-----------------------------------------------------------------------------------------------------------*/
+#table-div{
+    width: 73%;
+    height: 400px;
+    float: right;
+    background: #93c5fd;
+    border: #172554 1px solid;
+    /*padding-bottom: 5px;*/
+    margin-right: 3px;
+}
+.result-table {
+    /*border: 2px #463255 solid;*/
+    width: 100%;
+    /*margin-left: 2.5%;*/
+    /*margin-top: 10px;*/
+    text-align: center;
+    border-collapse: collapse;
+    background: #3b82f6; /* 400 */
+    border: black 2px solid;
+}
+th{
+    background: #1e40af;    /* 800* */
+    color: white;
+    padding: 5px;
+}
+td{
+    padding: 5px;
+}
+tr{
+    border: 1px black solid;
+}
+tr:nth-child(odd){
+    background: #60a5fa; /* 200 */
+}
+
+tr:hover{
+    background: #dbeafe; /* 100 */
+    cursor: pointer;
+}
