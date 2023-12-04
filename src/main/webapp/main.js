@@ -1,4 +1,61 @@
-function checkForm(qualifiedName, value){
+var x_base;
+var y_base = -3;
+var r_base;
+
+
+function CheckX(text_place){
+    let fail = "";
+    const x = text_place.value;
+    if(!/[1-90]+[.]?[1-90]*/.test(x)){
+        fail = "X должен быть числом";
+        document.getElementById("x").value = "";
+    }else{
+        if (x <= -5 || x >= 3){
+            document.getElementById("x").value = "";
+            fail = "Х не попадает в диапазон";
+        }else{
+            x_base = x;
+        }
+    }
+    document.getElementById("error").innerHTML = fail;
+    error.removeAttribute("hidden");
+}
+
+function CheckY(selection_place){
+    const y = selection_place.value;
+    y_base = y;
+}
+
+function CheckR(button){
+    const r = button.value;
+    r_base = r;
+}
+
+function CheckForm(){
+    console.log(x_base);
+    console.log(y_base);
+    console.log(r_base);
+    if(x_base == undefined || r_base == undefined){
+        const fail = "Выбраны не все значения для проверки";
+        document.getElementById("error").innerHTML = fail;
+        error.removeAttribute("hidden");
+    }else{
+        drawPoint(x_base, y_base);
+        PostToServer(x_base, y_base, r_base);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+function checkForm1(qualifiedName, value){
 
     var fail = "";
     var x_arr = document.getElementsByName("X");
@@ -43,6 +100,8 @@ function checkForm(qualifiedName, value){
 }
 
 
+
+
 function PostToServer(x, y, r) {
 
     // var y = document.getElementById("choose-y").value;
@@ -61,28 +120,38 @@ function PostToServer(x, y, r) {
     // data.append("R", r);
 
     const data = {
-        "X": x,
-        "Y": y,
-        "R": r
+        "x": x,
+        "y": y,
+        "r": r
     }
 
 
     // for (let [name, value] of data) {
     //     console.log(`${name} = ${value}`); // key1=value1, потом key2=value2
     // }
-    console.log("Выполнили это");
+    var formBody = [];
+    for (var property in data) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(data[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    //console.log("Выполнили это");
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == XMLHttpRequest.DONE && xhr.status === 200) {
-            newData(xhr.responseText);
-
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState == XMLHttpRequest.DONE && request.status === 200) {
+            // newData(request.responseText);
+            // location.assign('./index.jsp');
+            // window.sayHi();
+            handHttpResponse(request.responseText);
         }
     };
-    xhr.open('POST', 'handler.php', true);
-    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    console.log(JSON.stringify(data));
-    xhr.send(JSON.stringify(data));
+    request.open('POST', './check', true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // console.log(JSON.stringify(data));
+    // request.send(JSON.stringify(data));
+    request.send(formBody);
 
 
     // for (var key of data.keys()) {
@@ -93,12 +162,15 @@ function PostToServer(x, y, r) {
 
 }
 
+function handHttpResponse(text){
+   document.write(text);
+}
+
 
 
 function newData(text){
     var i = localStorage.length;
     try{
-
         txt = parseJSON(text, i);
     }catch (err){
         console.log(err);
@@ -152,7 +224,7 @@ function parseJSON(text, id = -1) {
         localStorage.removeItem("table_row" + id);
     }
 }
-
+// ############################################### Work with canvas
 
 
 function drawPoint(x, y){
@@ -168,18 +240,12 @@ function drawPoint(x, y){
 }
 
 
-
-
-
-
-
-
-
-
-function DrawArea(){
+function DrawArea(button){
     BackGroundColor("#fff");
     DrawXandY();
-    drawFigures();
+    const R = button.value;
+    r_base = R;
+    drawFigures(R);
 }
 
 function Changecenter(){
@@ -228,24 +294,25 @@ function DrawXandY(){
     ctx.fill();
     drawLines();
 }
-function drawFigures(){
-    var R = document.getElementById("select-r").value;
+function drawFigures(R){
+    // var R = document.getElementById("").value;
 
     // ctx.fillcolor = "#43aeef";
     // ctx.fillStyle = "#43aeef";
     ctx.fillcolor = "rgba(67, 174, 239, 0.7)";
     ctx.fillStyle = "rgba(67, 174, 239, 0.7)";
-
-    ctx.fillRect(0, R * size/2, R * size, -R * size/2);
+    // прямоугольник
+    ctx.fillRect(0, R * size, R * size/2, -R * size);
 
     ctx.beginPath();
-    ctx.moveTo(0, R * size/2);
-    ctx.lineTo(-R * size, 0);
+    ctx.moveTo(R * size, 0);
+    ctx.lineTo(0, -R * size);
     ctx.lineTo(0, 0);
     ctx.closePath();
     ctx.fill();
+    // четверть круга
     ctx.beginPath();
-    ctx.arc(0, 0, R * size/2, Math.PI, 3 * Math.PI / 2);
+    ctx.arc(0, 0, R * size/2, Math.PI/2, Math.PI);
     ctx.lineTo(0,0);
     ctx.closePath();
     ctx.fill();
@@ -271,8 +338,29 @@ function drawLines(){
     for (var j = -size - 1; j > -h/2 - 20; j -= size){
         ctx.fillRect(-size/4, j, size/2, 1);
     }
-
 }
+
+function handleClick(event) {
+    console.log("handler 2");
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left - 150;
+    const y = -1 * (event.clientY - rect.top - 200);
+    drawPoint(x/25, y/25);
+    console.log(r_base);
+    if (r_base == undefined){
+        console.log("here");
+        error.innerHTML = "Вы не выбрали радиус";
+        error.removeAttribute("hidden");
+    }else{
+        error.innerHTML = "";
+        PostToServer((x/25).toFixed(2), (y/25).toFixed(2), r_base);
+    }
+    // PostToServer(x, y, r_base);
+}
+
+
+
+
 
 fillThetabel();
 
@@ -280,10 +368,20 @@ var error = document.getElementById("error");
 // error.setAttribute("hidden");
 
 
-var example = document.getElementById("MyCanvas"),
-    ctx = example.getContext('2d');
-example.width = 300;
-example.hieght = 400;
+var canvas = document.getElementById("MyCanvas");
+const ctx = canvas.getContext('2d');
+canvas.width = 300;
+canvas.hieght = 400;
+
+
+// canvas.addEventListener("click", function (event){
+//     console.log("Handler1");
+//     drawPoint(event.clientX, event.clientY);
+// });
+
+canvas.addEventListener("click", handleClick);
+
+
 
 
 // ctx.beginPath();
@@ -292,8 +390,8 @@ example.hieght = 400;
 // ctx.moveTo(0, 202.5);
 // ctx.lineTo(300, 202.5);
 
-ctx.fillStyle = "#ffffff";
-ctx.fillcolor = "#ffffff";
+ctx.fillStyle = "#fff";
+ctx.fillcolor = "#fff";
 ctx.fillRect(0, 0, 300, 400);
 
 ctx.fillStyle = "black";
