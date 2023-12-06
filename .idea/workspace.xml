@@ -10,13 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8297c03e-5507-49f2-bf75-ea415bdd7bff" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/project/servlets/MyFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/Result.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/project/servlets/ClearServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/main1.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/project/servlets/AreaCheckServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/servlets/AreaCheckServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/servlets/ControllerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/servlets/ControllerServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/project/servlets/MyFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/servlets/MyFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/Result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/Result.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,9 +32,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="JavaScript File" />
         <option value="Jsp File" />
+        <option value="CSS File" />
         <option value="Class" />
       </list>
     </option>
@@ -56,7 +58,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/vstsa/IdeaProjects/WebJSP",
+    "last_opened_file_path": "C:/Users/vstsa/IdeaProjects/TestKR",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -70,6 +72,11 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\vstsa\IdeaProjects\WebJSP\src\main\webapp" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean install" />
+    </option>
   </component>
   <component name="RunManager">
     <configuration name="JBoss/WildFly 30.0.0.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 30.0.0.Final" ALTERNATIVE_JRE_ENABLED="false">
@@ -157,7 +164,7 @@
       <workItem from="1701203059583" duration="703000" />
       <workItem from="1701247682592" duration="20000" />
       <workItem from="1701444567790" duration="14403000" />
-      <workItem from="1701608109111" duration="29704000" />
+      <workItem from="1701608109111" duration="45813000" />
     </task>
     <servers />
   </component>
@@ -189,7 +196,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/project/servlets/AreaCheckServlet.java</url>
-          <line>20</line>
+          <line>21</line>
           <properties class="project.servlets.AreaCheckServlet" method="doPost">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -198,7 +205,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/project/servlets/AreaCheckServlet.java</url>
-          <line>80</line>
+          <line>86</line>
           <properties class="project.servlets.AreaCheckServlet" method="print_final_page">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -207,7 +214,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/project/servlets/AreaCheckServlet.java</url>
-          <line>84</line>
+          <line>89</line>
           <properties class="project.servlets.AreaCheckServlet" method="print_not_valid_page">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -223,11 +230,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/project/servlets/ControllerServlet.java</url>
           <line>23</line>
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/project/servlets/AreaCheckServlet.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -6,7 +6,7 @@ var r_base;
 function CheckX(text_place){
     let fail = "";
     const x = text_place.value;
-    if(!/[1-90]+[.]?[1-90]*/.test(x)){
+    if(!/-?[1-90]+[.]?[1-90]*/.test(x)){
         fail = "X должен быть числом";
         document.getElementById("x").value = "";
     }else{
@@ -40,6 +40,10 @@ function CheckForm(){
         document.getElementById("error").innerHTML = fail;
         error.removeAttribute("hidden");
     }else{
+        const id = localStorage.length;
+        const point = x_base + " " + y_base;
+        console.log(point);
+        localStorage.setItem("point " + id, point);
         drawPoint(x_base, y_base);
         PostToServer(x_base, y_base, r_base);
     }
@@ -168,17 +172,17 @@ function handHttpResponse(text){
 
 
 
-function newData(text){
-    var i = localStorage.length;
-    try{
-        txt = parseJSON(text, i);
-    }catch (err){
-        console.log(err);
-    }
-    localStorage.setItem('table_row' + i, text);
-    // console.log(txt);
-    addToTable(txt);
-}
+// function newData(text){
+//     var i = localStorage.length;
+//     try{
+//         txt = parseJSON(text, i);
+//     }catch (err){
+//         console.log(err);
+//     }
+//     localStorage.setItem('table_row' + i, text);
+//     // console.log(txt);
+//     addToTable(txt);
+// }
 
 function addToTable(txt){
     const table = document.getElementById("Data");
@@ -186,7 +190,17 @@ function addToTable(txt){
 }
 
 function clearTable(){
-    localStorage.clear();
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState == XMLHttpRequest.DONE && request.status === 200) {
+            console.log("success");
+            localStorage.clear();
+        }
+    };
+    request.open('DELETE', './clearTable', true);
+    request.send();
+    // request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // localStorage.clear();
 }
 
 function fillThetabel(){
@@ -246,6 +260,7 @@ function DrawArea(button){
     const R = button.value;
     r_base = R;
     drawFigures(R);
+    drawAllPoint();
 }
 
 function Changecenter(){
@@ -352,17 +367,29 @@ function handleClick(event) {
         error.innerHTML = "Вы не выбрали радиус";
         error.removeAttribute("hidden");
     }else{
+        const id = localStorage.length;
+        const point = x/25 + " " + y/25;
+        console.log(point);
+        localStorage.setItem("point " + id, point);
         error.innerHTML = "";
         PostToServer((x/25).toFixed(2), (y/25).toFixed(2), r_base);
     }
     // PostToServer(x, y, r_base);
 }
+function drawAllPoint(){
+    for(let i = 0; i < localStorage.length; i++){
+        const point =  localStorage.getItem("point " + i);
+        const [x_now, y_now] = point.split(" ");
+        console.log(x_now, y_now);
+        drawPoint(x_now, y_now);
+        console.log(point);
+    }
+}
 
 
 
 
-
-fillThetabel();
+// fillThetabel();
 
 var error = document.getElementById("error");
 // error.setAttribute("hidden");
@@ -433,8 +460,8 @@ drawFigures();
 // }
 // drawLines(ctx, size, 300, 400);
 drawFigures(ctx, size);
+drawAllPoint();
 // drawFigures(ctx, -100);
-
 
 
 

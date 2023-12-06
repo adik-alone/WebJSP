@@ -18,7 +18,9 @@
             String x = request.getParameter("x");
             String y = request.getParameter("y");
             String r = request.getParameter("r");
-            return("x = " + x + " y = " + y + " r = " + r);
+            String result = (String) request.getAttribute("result");
+            String result_str = "Координаты: x = " + x + ", y = " + y + ", r = " + r + " Результат: " + result;
+            return result_str;
         }
     %>
     <p>
@@ -67,7 +69,7 @@
             <td><%= x %></td>
             <td><%= y %></td>
             <td><%= r %></td>
-            <td><%= result%></td>
+            <td><%= result %></td>
             <td><%= date %></td>
             <td><%= exeTime %></td>
         </tr>

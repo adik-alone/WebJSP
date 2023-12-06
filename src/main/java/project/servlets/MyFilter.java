@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//@WebFilter(value = "/check")
+@WebFilter(value = "/check")
 public class MyFilter extends HttpFilter {
     private ServletContext context;
     @Override
@@ -39,7 +39,7 @@ public class MyFilter extends HttpFilter {
             errors.add(error);
         }
         if (notString(y)){
-            if(!validX(y)){
+            if(!validY(y)){
                 String error = "Wrong Y";
                 errors.add(error);
             }
@@ -48,7 +48,7 @@ public class MyFilter extends HttpFilter {
             errors.add(error);
         }
         if (notString(r)){
-            if(!validX(r)){
+            if(!validR(r)){
                 String error = "Wrong R";
                 errors.add(error);
             }
@@ -61,6 +61,7 @@ public class MyFilter extends HttpFilter {
             HttpServletResponse response = (HttpServletResponse) res;
             response.setContentType("text/html");
             for(int i = 0; i < errors.size(); i++){
+                context.log(errors.get(i));
                 response.getWriter().println(errors.get(i));
             }
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -94,7 +95,7 @@ public class MyFilter extends HttpFilter {
     }
     private boolean notString(String s){
         Pattern pattern = Pattern.compile("[1-90,.]+");
-        boolean isNumber = Pattern.matches("[1-90]+[.]?[1-90]*", s);
+        boolean isNumber = Pattern.matches("-?[1-90]+[.]?[1-90]*", s);
         context.log(String.valueOf(isNumber));
         return isNumber;
     }

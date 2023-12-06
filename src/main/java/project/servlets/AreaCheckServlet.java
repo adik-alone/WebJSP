@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -19,43 +20,48 @@ import java.util.List;
 @WebServlet(name="areaChecker", value ="/areacheck")
 public class AreaCheckServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String x = request.getParameter("x");
-        String y = request.getParameter("y");
-        String r = request.getParameter("r");
+        String x_str = request.getParameter("x");
+        String y_str = request.getParameter("y");
+        String r_str = request.getParameter("r");
 
-        boolean x_val = isValidX(x);
-        boolean y_val = isValidY(y);
-        boolean r_val = isValidR(r);
+        long start_time = System.nanoTime();
 
-        if (x_val && y_val && r_val){
-            print_final_page(x, y, r, response, request);
-        }else{
-            List<String> errors = new ArrayList<>();
-            if(!x_val){
-                String error_x = "x isn't valid";
-                errors.add(error_x);
+        double x = Double.parseDouble(x_str);
+        double y = Double.parseDouble(y_str);
+        double r = Double.parseDouble(r_str);
+        boolean result = false;
+//        String result_str;
+
+        if(x > 0 || y > 0){
+            if(y <= r / 2){
+                if(x <= r){
+                    result = true;
+                }
             }
-            if(!y_val){
-                String error_y = "y isn't valid";
-                errors.add(error_y);
-            }
-            if(!r_val){
-                String error_r = "r isn't valid";
-                errors.add(error_r);
-            }
-            print_not_valid_page(errors, response);
         }
+        if(x < 0 || y > 0){
+            if(x*x + y*y <= r*r){
+                result = true;
+            }
+        }
+        if(x < 0 || y < 0) {
+            result = false;
+        }
+        if(x > 0 || y < 0){
+            if (x - r <= y){
+                result = true;
+            }
+        }
+        String result_str = parseResultToStr(result);
+        request.setAttribute("result", result_str);
+        long end_time = System.nanoTime();
+        long execution_time = (end_time - start_time)/1000;
+        String exec_time = String.valueOf(execution_time) + " mc";
+        addToSession(request, x_str, y_str, r_str, result_str, exec_time);
+        print_final_page(request, response);
+
     }
-    private boolean isValidX(String x){
-        return true;
-    }
-    private boolean isValidY(String y){
-        return true;
-    }
-    private boolean isValidR(String r){
-        return true;
-    }
-    private void addToSession(HttpServletRequest request, String x, String y, String r){
+    private void addToSession(HttpServletRequest request, String x, String y, String r, String result, String exec_time){
         int id = 0;
         HttpSession session = request.getSession();
         Object Id = session.getAttribute("id");
@@ -69,17 +75,16 @@ public class AreaCheckServlet extends HttpServlet {
         table_row.put("x", x);
         table_row.put("y", y);
         table_row.put("r", r);
-        table_row.put("result", "попал");
-        table_row.put("date", "04.12.2023");
-        table_row.put("exe-time", "23sec");
+        table_row.put("result", result);
+        table_row.put("date", String.valueOf(new org.joda.time.DateTime()));
+        table_row.put("exe-time", exec_time);
 //        String data_json = "{" + "\"x\": " + x + "\n" +
 //                "\"y\": " + y + "\n" +
 //                "\"r\": " + r + "}";
 
         session.setAttribute("table_row" + id, table_row);
     }
-    private void print_final_page(String x, String y, String r, HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
-        addToSession(request, x, y, r);
+    private void print_final_page(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("./Result.jsp").forward(request, response);
     }
     private void print_not_valid_page(List<String> errors, HttpServletResponse response) throws IOException{
@@ -88,12 +93,11 @@ public class AreaCheckServlet extends HttpServlet {
             response.getWriter().println(error);
         }
     }
-    private int getNewIdForSessionDate(HttpSession session){
-        int id = 0;
-        Enumeration<String> names = session.getAttributeNames();
-        while(names.hasMoreElements()){
-            id++;
+    private String parseResultToStr(boolean result){
+        if(result){
+            return "Попал";
+        }else{
+            return "Промах";
         }
-       return id;
     }
 }
