@@ -94,7 +94,6 @@ public class MyFilter extends HttpFilter {
         }
     }
     private boolean notString(String s){
-        Pattern pattern = Pattern.compile("[1-90,.]+");
         boolean isNumber = Pattern.matches("-?[1-90]+[.]?[1-90]*", s);
         context.log(String.valueOf(isNumber));
         return isNumber;

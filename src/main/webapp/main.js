@@ -3,6 +3,13 @@ var y_base = -3;
 var r_base;
 
 
+
+
+
+
+getStartPoint();
+
+
 function CheckX(text_place){
     let fail = "";
     const x = text_place.value;
@@ -197,10 +204,40 @@ function clearTable(){
             localStorage.clear();
         }
     };
-    request.open('DELETE', './clearTable', true);
+    request.open('DELETE', './dataManage', true);
     request.send();
     // request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     // localStorage.clear();
+}
+function getStartPoint(){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState == XMLHttpRequest.DONE && request.status === 200) {
+            // console.log("get start point");
+            handleStartPoint(request.responseText);
+        }
+    };
+    request.open('GET', './dataManage', true);
+    request.send();
+}
+
+function handleStartPoint(json){
+    localStorage.clear();
+    let text = JSON.parse(json);
+    // console.log("before len");
+    // console.log(text.points.length);
+    // console.log("after");
+    // console.log(text.points);
+    // console.log(text.points[0]);
+    for(let i = 0; i < text.points.length; i++){
+        const id = localStorage.length;
+        [x, y] = text.points[i].split(' ');
+        // const x = text.points[i].x;
+        // const y = text.points[i].y;
+        const point = x + " " + y;
+        // console.log(point);
+        localStorage.setItem("point " + id, point);
+    }
 }
 
 function fillThetabel(){
@@ -355,6 +392,21 @@ function drawLines(){
     }
 }
 
+function validX(x){
+    if (x <= -5 || x >= 3){
+        return false;
+    }else{
+        return true;
+    }
+}
+function validY(y){
+    if(y < -3 || y > 5){
+        return false;
+    }else{
+        return true;
+    }
+}
+
 function handleClick(event) {
     console.log("handler 2");
     const rect = canvas.getBoundingClientRect();
@@ -367,6 +419,17 @@ function handleClick(event) {
         error.innerHTML = "Вы не выбрали радиус";
         error.removeAttribute("hidden");
     }else{
+        //validation of x and y
+        if(!validX(x/25)){
+            error.innerHTML = "X выходит за пределы возможного диапазона";
+            error.removeAttribute("hidden");
+            return;
+        }
+        if(!validY(y/25)){
+            error.innerHTML = "Y выходит за пределы возможного диапазона";
+            error.removeAttribute("hidden");
+            return;
+        }
         const id = localStorage.length;
         const point = x/25 + " " + y/25;
         console.log(point);
@@ -377,12 +440,12 @@ function handleClick(event) {
     // PostToServer(x, y, r_base);
 }
 function drawAllPoint(){
-    for(let i = 0; i < localStorage.length; i++){
-        const point =  localStorage.getItem("point " + i);
+    for(let i = 0; i < localStorage.length; i++) {
+        const point = localStorage.getItem("point " + i);
         const [x_now, y_now] = point.split(" ");
-        console.log(x_now, y_now);
+        // console.log(x_now, y_now);
         drawPoint(x_now, y_now);
-        console.log(point);
+        // console.log(point);
     }
 }
 
