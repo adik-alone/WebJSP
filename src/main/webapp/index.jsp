@@ -18,14 +18,14 @@
     </div>
     <div id="main">
         <!--        <h1>Попади в синюю область!</h1>-->
-        <form method="POST" action="" id="form" onclick="" onsubmit="CheckForm(); return false;">
+        <form method="POST" action="" id="form" onclick="" class="forms" onsubmit="CheckForm(); return false;">
             <div class="form-element">
-                <label for="x">Choose X</label>
+                <label for="x">Choose X:</label>
                 <input type="text" name="x" placeholder="(-5..3)" id="x" onchange="CheckX(this)">
             </div>
 
             <div class="form-element">
-                <label for="y">Choose Y</label>
+                <label for="y">Choose Y:</label>
                 <select id="y" name="y" onchange="CheckY(this)">
                     <option value="-3" selected>-3</option>
                     <option value="-2">-2</option>
@@ -39,7 +39,7 @@
                 </select>
             </div>
             <div class="form-element">
-                <label for="r-1">Choose R</label>
+                <label for="r-1">Choose R:</label>
                 <button value="1" id="r-1" type="button" name="r" class="r-button" onclick="DrawArea(this);">r = 1</button>
                 <button value="1.5" id="r-1.5" name="r" type="button" class="r-button" onclick="DrawArea(this)">r = 1.5</button>
                 <button value="2" id="r-2"name="r" type="button" class="r-button" onclick="DrawArea(this)">r = 2</button>
@@ -47,16 +47,16 @@
                 <button value="3" id="r-3" name="r" type="button" class="r-button" onclick="DrawArea(this)">r = 3</button>
             </div>
 
-            <div hidden id="error" style="color: #ff0000"></div>
             <p><input id="button" class="ui-button" type="submit" onclick=""></p>
+            <div hidden id="error" style="color: #ff0000"></div>
         </form>
-        <form onsubmit="clearTable();">
+        <form class="forms" id="form-clear" onsubmit="clearTable();">
             <button id="button-clear" class="ui-button">Очистить таблицу</button>
         </form>
     </div>
 </div>
 <div id="table-div">
-    <table class="result-table" id="data-table">
+    <table class="result-table">
             <%!
        HttpSession session = null;
     %>

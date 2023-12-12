@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>Result of shot</title>
+    <link rel="stylesheet" href="result.css">
 </head>
 <body>
     <%!
@@ -23,10 +24,12 @@
             return result_str;
         }
     %>
+    <div class="text">
     <p>
     <%=getParam(request, response)%>
     </p>
-    <button onclick="ComeHome();">Вернутся</button>
+    </div>
+    <button class="ui-button" onclick="ComeHome();">Вернутся</button>
     <%!
        HttpSession session = null;
     %>
@@ -43,7 +46,7 @@
 
 //        List<String> names = (ArrayList<String>)session.getAttributeNames();
     %>
-    <table>
+    <table class="result-table">
         <thead>
             <tr>
                 <th>X</th>
@@ -84,7 +87,7 @@
 <%--    <p><%= session.getAttribute("table_row")%></p>--%>
 <script>
     function ComeHome(){
-        location.assign("./index.jsp");
+        location.assign("index.jsp");
     }
 </script>
 </body>

@@ -19,7 +19,7 @@ public class ControllerServlet extends HttpServlet {
         String y = request.getParameter("y");
         String r = request.getParameter("r");
 //        String x_1 = request
-        if(x == null || y == null || r == null || x.equals("") || r.equals("undefined") || x.equals("undefined")){
+        if(x == null || y == null || r == null){
 //            response.getWriter().println("w");
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }else{
